@@ -1,3 +1,27 @@
 {%extends "base.html" %} 
-{% block title %} | {{slug}}{% endblock %} 
-{% block content %} This is from project-detail.html {{message}} {% endblock %}
+{% block title %} | {{project.title}}{% endblock %} 
+{% block content %} 
+<div>
+{{project.title}}
+</div>
+<div>
+{{project.description}}
+</div>
+<div>
+{{project.demo_link}}
+</div>
+<div>
+{{project.source_link}}
+</div>
+<div>
+    {% for tag in project.tags.all%}
+{{tag.name}}
+{% endfor%}
+</div>
+<div>
+{{project.vote_total}}
+</div>
+<div>
+{{project.vote_ratio}}
+</div>
+{% endblock %}
