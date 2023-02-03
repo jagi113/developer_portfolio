@@ -1,0 +1,16 @@
+{% extends "base.html"%} 
+{% load static %} 
+{% block title %} | New project{% endblock%} 
+
+{% block content %}
+<h1>Project Form</h1> 
+<form method="POST">
+    {% csrf_token %}
+    {% for field in project_form %}
+    <div>{{ field.label}}</div>
+    <div>{{ field }}</div>
+    {% endfor %}
+    <input type="submit">
+</form>
+
+{% endblock %}

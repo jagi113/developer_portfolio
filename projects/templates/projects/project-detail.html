@@ -24,4 +24,6 @@
 <div>
 {{project.vote_ratio}}
 </div>
+<a href = "{% url 'projects:update-project' project.id %}">Update project information</a>
+<a href="{% url "projects:delete-project" project.id %}">Delete project</a> 
 {% endblock %}
