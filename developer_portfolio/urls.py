@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url="projects/")),
-    path("projects/", include("projects.urls")) 
+    path('', RedirectView.as_view(url="projects/"), name="home"),
+    path("projects/", include("projects.urls")),
+    path("delete_confirmation/<str:type>/<str:pk>", views.delete_confirmation, name="delete_confirmation")
 ]

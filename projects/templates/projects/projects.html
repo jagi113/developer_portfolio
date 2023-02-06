@@ -7,7 +7,7 @@
 {% for project in projects %}
 <li>
     Title: <a href="{% url "projects:project-detail" project.id %}">{{project.title}}</a>
-    <a href="{% url "projects:delete-project" project.id %}">Delete</a>
+    <a href="{% url "delete_confirmation" type='Project' pk=project.id  %}">Delete</a>
 </li>
 {% endfor%}
 </ul>

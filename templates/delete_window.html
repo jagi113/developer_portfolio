@@ -1,0 +1,9 @@
+<div>
+    <p>Are you sure you want to delete "{{object}}"?</p>
+    <a href="{{previous_url}}">
+        <button>Go Back</button>
+    </a>
+    <form action="{% url delete_path object.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit">Yes</button>
+    </form>
