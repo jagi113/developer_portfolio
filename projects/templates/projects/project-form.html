@@ -3,14 +3,26 @@
 {% block title %} | New project{% endblock%} 
 
 {% block content %}
-<h1>Project Form</h1> 
-<form method="POST">
-    {% csrf_token %}
-    {% for field in project_form %}
-    <div>{{ field.label}}</div>
-    <div>{{ field }}</div>
-    {% endfor %}
-    <input type="submit">
-</form>
+
+
+
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% for field in project_form %}
+                <!-- Input:Text -->
+                <div class="form__field">
+                    <label for="formInput#text">{{ field.label}}: </label>
+                    {{ field }}
+                </div>
+                {% endfor %}
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
 
 {% endblock %}

@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url="projects/"), name="home"),
     path("projects/", include("projects.urls")),
     path("delete_confirmation/<str:type>/<str:pk>", views.delete_confirmation, name="delete_confirmation")
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
