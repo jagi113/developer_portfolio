@@ -3,8 +3,8 @@ from projects.models import Project, Review, Tag
 
 # Register your models here.
 class ProjectAdmin(admin.ModelAdmin):
-    list_filter = ("created_at","vote_ratio")
-    list_display = ("title", )
+    list_filter = ("created_at","vote_ratio", "owner")
+    list_display = ("title", "owner")
     
 class ReviewAdmin(admin.ModelAdmin):
     list_filter = ("created_at","project")

@@ -23,7 +23,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url="projects/"), name="home"),
+    path('', RedirectView.as_view(url="profiles/"), name="home"),
     path("projects/", include("projects.urls")),
+    path("profiles/", include("users.urls")),
     path("delete_confirmation/<str:type>/<str:pk>", views.delete_confirmation, name="delete_confirmation")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
