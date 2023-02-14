@@ -41,9 +41,10 @@
             {{project.description}}
           </div>
 
+          {% if project.owner == request.user.profile %}
           <a class="btn btn--sub btn--lg" href="{% url 'projects:update-project' project.id %}">Update project information</a>
             <a class="btn btn--sub btn--lg" href="{% url "delete_confirmation" type='Project' pk=project.id  %}">Delete this project</a>
-
+          {% endif %}
           <div class="comments">
             <h3 class="singleProject__subtitle">Feedback</h3>
             <h5 class="project--rating">

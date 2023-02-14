@@ -1,7 +1,67 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
 from users.models import Profile
+from django.contrib.auth.models import User
+from django.contrib import messages
+from users.forms import CustomUserCreationForm
 
 # Create your views here.
+
+def loginUser(request):
+    page='login'
+    context={"page":page,}
+    
+    #for restricting login user to go to login page again
+    if request.user.is_authenticated:
+        return(redirect('users:profiles'))
+    
+    # for submitted login form
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        
+        try: 
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'Username does not exist!')
+            
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "Username or password is not correct.")
+    
+    # for a user to present empty login form
+    return render(request, 'users/login_register.html', context)
+
+def logoutUser(request):
+    logout(request)
+    messages.info(request, "User was logged out!")
+    return redirect('users:login')
+
+def registerUser(request):
+    #for restricting login user to go to register page again
+    if request.user.is_authenticated:
+        return(redirect('users:profiles'))
+    
+    page='register'
+    form = CustomUserCreationForm()    
+    
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            messages.success(request, "User account was created!")
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, "An error has occured! Try again!")
+                  
+    context={"page":page, "form":form}
+    return render(request, 'users/login_register.html', context)
 
 def profiles(request):
     profiles = Profile.objects.all()
