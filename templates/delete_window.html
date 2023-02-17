@@ -1,9 +1,33 @@
-<div>
-    <p>Are you sure you want to delete "{{object}}"?</p>
-    <a href="{{previous_url}}">
-        <button>Go Back</button>
-    </a>
-    <form action="{% url delete_path object.id %}" method="POST">
-        {% csrf_token %}
-        <button type="submit">Yes</button>
-    </form>
+
+{% extends "base.html"%} 
+{% load static %} 
+{% block title %} | Delete Your {{type}} {% endblock%} 
+
+{% block content %} 
+
+
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="{{previous_url}}"><i class="fa-solid fa-chevron-left "></i></a>
+            <br>
+            <h2>Are you sure you want to delete {{type}} "{{object}}"?</h2>
+            <div class="content-box">
+                <a href="">
+                    <form class="form" enctype="multipart/form-data">
+                    <input class="btn btn--sub btn--lg  my-md" value="Go Back" />
+                    </form>
+                </a>
+            </div>
+            <div class="content-box">
+                <form class="form" action="{% url delete_path object.id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input class="btn btn--sub btn--lg  my-md" type="submit" value="DELETE" />
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+

@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from users.models import Profile
+from users.models import Profile, Skill
 from django.contrib.auth.models import User
 from django.contrib import messages
-from users.forms import CustomUserCreationForm, ProfileForm
+from users.forms import CustomUserCreationForm, ProfileForm, SkillForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -105,3 +105,44 @@ def editAccount(request):
 
     context = {"profile": profile, "form": form}
     return render(request, 'users/profile-form.html', context)
+
+
+@login_required(login_url='users:login')
+def createSkill(request):
+    form = SkillForm()
+    if request.method == "POST":
+        form = SkillForm(request.POST)
+        if form.is_valid():
+            skill = form.save(commit=False)
+            skill.owner = request.user.profile
+            skill.save()
+            return redirect('users:account')
+
+    context = {"form": form, "page": "create"}
+    return render(request, 'users/skill-form.html', context)
+
+
+@login_required(login_url='users:login')
+def editSkill(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+    form = SkillForm(instance=skill)
+
+    if request.method == 'POST':
+        form = SkillForm(request.POST, request.FILES, instance=skill)
+        if form.is_valid():
+            form.save()
+            return redirect("users:account")
+
+    context = {"form": form, "page": "edit", "skill": skill}
+    return render(request, 'users/skill-form.html', context)
+
+
+@login_required(login_url='users:login')
+def deleteSkill(request, pk):
+    profile = request.user.profile
+    skill = profile.skill_set.get(id=pk)
+
+    if request.method == "POST":
+        skill.delete()
+        return redirect("users:account")

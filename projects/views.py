@@ -37,11 +37,10 @@ def create_project(request):
 
 @login_required(login_url='users:login')
 def update_project(request, pk):
-    project = Project.objects.get(id=pk)
-    if project.owner != request.user.profile:
-        messages.error(
-            request, "You are not authorized for updating this post!")
-        return redirect("projects:project-detail", pk)
+    # for making sure that only owner of a project can update it we can either get his profile
+    # and request project from his set based on id
+    profile = request.user.profile
+    project = profile.projects.get(id=pk)
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
