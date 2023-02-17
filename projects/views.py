@@ -3,13 +3,14 @@ from projects.models import Tag, Project, Review
 from projects.forms import ProjectForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from projects.utils import searchProjects
 
 # Create your views here.
 
 
 def index(request):
-    projects = Project.objects.all().order_by("-created_at")
-    context = {"projects": projects}
+    projects, search_query = searchProjects(request)
+    context = {"projects": projects, "search_query": search_query}
     return render(request, 'projects/projects.html', context)
 
 
@@ -19,7 +20,7 @@ def project_detail(request, pk):
     return render(request, 'projects/project-detail.html', context)
 
 
-@login_required(login_url='users:login')
+@ login_required(login_url='users:login')
 def create_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST, request.FILES)
@@ -35,7 +36,7 @@ def create_project(request):
     return render(request, "projects/project-form.html", context)
 
 
-@login_required(login_url='users:login')
+@ login_required(login_url='users:login')
 def update_project(request, pk):
     # for making sure that only owner of a project can update it we can either get his profile
     # and request project from his set based on id
@@ -53,7 +54,7 @@ def update_project(request, pk):
     return render(request, "projects/project-form.html", context)
 
 
-@login_required(login_url='users:login')
+@ login_required(login_url='users:login')
 def delete_project(request, pk):
     project = Project.objects.get(id=pk)
     if project.owner != request.user.profile:

@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from users.models import Profile, Skill
+from users.models import Profile
 from django.contrib.auth.models import User
 from django.contrib import messages
 from users.forms import CustomUserCreationForm, ProfileForm, SkillForm
 from django.contrib.auth.decorators import login_required
+from users.utils import searchProfiles
+
 
 # Create your views here.
 
@@ -69,8 +71,11 @@ def registerUser(request):
 
 
 def profiles(request):
-    profiles = Profile.objects.all()
-    return render(request, 'users/profiles.html', {"profiles": profiles})
+    profiles, search_query = searchProfiles(request)
+    context = {"profiles": profiles,
+               "search_query": search_query
+               }
+    return render(request, 'users/profiles.html', context)
 
 
 def profile_detail(request, pk):
