@@ -3,14 +3,20 @@ from projects.models import Tag, Project, Review
 from projects.forms import ProjectForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from projects.utils import searchProjects
+from projects.utils import searchProjects, paginateProjects
+
 
 # Create your views here.
 
 
 def index(request):
     projects, search_query = searchProjects(request)
-    context = {"projects": projects, "search_query": search_query}
+
+    custom_range, projects = paginateProjects(request, projects, 6)
+
+    context = {"results": projects,
+               "search_query": search_query,
+               "custom_range": custom_range}
     return render(request, 'projects/projects.html', context)
 
 

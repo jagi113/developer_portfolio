@@ -10,11 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-from pathlib import Path
-from dotenv import load_dotenv
-load_dotenv()
 from os import getenv
-
+from pathlib import Path
+# from dotenv import load_dotenv
+# load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -125,7 +124,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATICFILES_DIRS = [BASE_DIR / "static",]
+STATICFILES_DIRS = [BASE_DIR / "static", ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -135,4 +134,4 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / "uploads"
-MEDIA_URL = "/user-media/"   
+MEDIA_URL = "/user-media/"

@@ -1,0 +1,19 @@
+{% if results.has_other_pages %}
+<div class="pagination">
+  <ul class="container">
+    {% if results.has_previous %}
+      <li><a href="?page={{results.previous_page_number}} " class="btn page page-link" data-page="{{results.previous_page_number}}">&#10094; Prev</a></li>
+    {% endif %}
+    {% for page in custom_range %}
+      {% if page == results.number %}
+      <li><a href="?page={{page}}" class="btn page btn--sub" data-page="{{page}}">{{page}}</a></li>
+      {% else %}
+      <li><a href="?page={{page}}" class="btn page page-link" data-page="{{page}}">{{page}}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if results.has_next %}
+    <li><a href="?page={{results.next_page_number}}" class="btn page page-link" data-page="{{results.next_page_number}}">Next &#10095;</a></li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
