@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from projects.models import Tag, Project, Review
-from projects.forms import ProjectForm
+from projects.forms import ProjectForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from projects.utils import searchProjects, paginateProjects
-
+from django.contrib import messages 
+from django.db import IntegrityError
 
 # Create your views here.
 
@@ -22,7 +23,25 @@ def index(request):
 
 def project_detail(request, pk):
     project = Project.objects.get(id=pk)
-    context = {"project": project}
+    review_form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, request.FILES)
+        review = form.save(commit=False)
+        review.owner = request.user.profile
+        review.project = project
+        # Update project votecount
+        
+        
+        if form.is_valid():
+            try:
+                messages.success(request, 'Your review was successfully saved!')
+                review.save()
+                project.getVoteCount
+                pk = project.id
+                return redirect("projects:project-detail", pk)
+            except IntegrityError as e:
+                messages.error(request, 'You already submitted your feedback.')
+    context = {"project": project, "review_form":review_form}
     return render(request, 'projects/project-detail.html', context)
 
 

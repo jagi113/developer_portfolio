@@ -1,7 +1,6 @@
 //GET SEARCH FORM for value and PAGE LINKS
 let searchForm = document.getElementById('searchForm')
 let pageLinks = [...document.getElementsByClassName('page')]
-console.log(pageLinks)
 
 // ENSURE SEARCH FORM EXISTS
 if (searchForm){

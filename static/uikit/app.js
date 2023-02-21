@@ -1,14 +1,19 @@
 // Invoke Functions Call on Document Loaded
 document.addEventListener('DOMContentLoaded', function () {
-  hljs.highlightAll();
+  closeMessage();
 });
 
+function closeMessage(){
+  let alertWrapper = document.getElementsByClassName('alert')
+  let alertClose = document.getElementsByClassName('alert__close')
 
-let alertWrapper = document.querySelector('.alert')
-let alertClose = document.querySelector('.alert__close')
-
-if (alertWrapper) {
-  alertClose.addEventListener('click', () =>
-    alertWrapper.style.display = 'none'
-  )
+  if (alertWrapper) {
+    [...alertClose].forEach(item => {
+      item.addEventListener('click', ()=>{
+        [...alertWrapper].forEach(i => {
+          i.style.display = 'none'
+          })
+      })
+    });
+  }
 }
