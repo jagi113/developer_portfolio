@@ -25,6 +25,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url="profiles/"), name="home"),
+    path('api/', include("api.urls")),
+    
     path("projects/", include("projects.urls")),
     path("profiles/", include("users.urls")),
     path("delete_confirmation/<str:type>/<str:pk>", views.delete_confirmation, name="delete_confirmation"),
