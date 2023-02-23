@@ -135,3 +135,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/user-media/"
+
+# Email sending settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = getenv("EMAIL_USER_NAME")
+EMAIL_HOST_PASSWORD = getenv("EMAIL_PASSWORD")
