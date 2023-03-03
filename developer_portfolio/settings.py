@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -53,6 +54,8 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -143,6 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/user-media/"
 
+
 # Email sending settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -152,7 +156,13 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = getenv("EMAIL_USER_NAME")
 EMAIL_HOST_PASSWORD = getenv("EMAIL_PASSWORD")
 
+# CORS SETTINGS
+CORS_ALLOW_ALL_ORIGINS = True
 
+
+
+
+# Setting properties of Jason Web Token
 from datetime import timedelta
 ...
 

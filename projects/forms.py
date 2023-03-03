@@ -5,7 +5,7 @@ from django import forms
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        exclude = ["owner","created_at", "id", "vote_total", "vote_ratio"]
+        exclude = ["owner","created_at", "id", "vote_total", "vote_ratio", "tags"]
         widgets = {
             'tags': forms.CheckboxSelectMultiple()
         }

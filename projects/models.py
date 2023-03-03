@@ -7,7 +7,7 @@ import uuid
 
 class Project(models.Model):
     owner = models.ForeignKey(Profile, null=True, blank=True, verbose_name="owner",
-                              on_delete=models.SET_NULL, related_name="projects")
+                              on_delete=models.CASCADE, related_name="projects")
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     featured_image = models.ImageField(
@@ -27,6 +27,14 @@ class Project(models.Model):
     class Meta:
         ordering = ['-vote_ratio', '-vote_total', '-created_at']
         
+    @property
+    def imageURL(self):
+        try: 
+            url = self.featured_image.url
+        except: 
+            url = ""   
+        return url
+                 
     @property
     def getVoteCount(self):
         reviews = self.review_set.all()

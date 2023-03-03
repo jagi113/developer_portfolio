@@ -35,7 +35,7 @@
             <div class="dev">
               <a href="{% url 'users:profile-detail' profile.id %}" class="card__body">
                 <div class="dev__profile">
-                  <img class="avatar avatar--md" src="{{profile.profile_image.url}}" alt="{{profile.profile_image}}" />
+                  <img class="avatar avatar--md" src="{{profile.imageURL}}" alt="{{profile.profile_image}}" />
                   <div class="dev__meta">
                     <h3>{{profile.name}}</h3>
                     <h5>{{profile.short_intro|slice:"40"}}</h5>

@@ -43,5 +43,8 @@ def updateUser(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Profile)
 def deleteUser(sender, instance, ** kwargs):
-    deleteduser = instance.user
-    deleteduser.delete()
+    try:
+        deleteduser = instance.user
+        deleteduser.delete()
+    except: 
+        print("This user has been deleted.")

@@ -48,12 +48,16 @@ def project_detail(request, pk):
 @ login_required(login_url='users:login')
 def create_project(request):
     if request.method == 'POST':
+        tags = request.POST.get('newtags').replace(",", " ").split()
         form = ProjectForm(request.POST, request.FILES)
         if form.is_valid():
             project = form.save(commit=False)
             user = request.user
             project.owner = user.profile
             project.save()
+            for tag in tags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
             pk = project.id
             return redirect("projects:project-detail", pk)
     else:
@@ -70,12 +74,16 @@ def update_project(request, pk):
     form = ProjectForm(instance=project)
 
     if request.method == 'POST':
+        tags = request.POST.get('newtags').replace(",", "").replace("    ", " ").replace("   ", " ").replace("  ", " ").replace('"', '').split()
         form = ProjectForm(request.POST, request.FILES, instance=project)
         if form.is_valid():
             form.save()
+            for tag in tags:
+                tag, created = Tag.objects.get_or_create(name=tag)
+                project.tags.add(tag)
             return redirect("projects:project-detail", pk)
     else:
-        context = {"project_form": form}
+        context = {"project_form": form, "project": project}
     return render(request, "projects/project-form.html", context)
 
 
