@@ -92,10 +92,22 @@ WSGI_APPLICATION = 'developer_portfolio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'devsearch',
+        'USER': 'jagi113',
+        'PASSWORD': getenv("DATABASE_PASSWORD"),
+        'HOST': '192.168.101.189', # 172.17.0.5
+        'PORT': '5435',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 
 
 # Password validation
